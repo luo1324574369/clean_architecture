@@ -17,23 +17,29 @@ func NewGiftServer() *giftSvr {
 	}
 }
 
+// AddGiftConfig 增加配置
 func (p *giftSvr) AddGiftConfig(ctx *gin.Context) {
 	cmd := gift.AddGiftConfigCMD{}
 	if err := p.logic.AddGiftConfig(ctx, cmd); err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
-			"msg": "ok",
+			"msg": "fail",
 		})
 	}
-}
 
-func (p *giftSvr) GetGiftConfigList(ctx *gin.Context) {
-	entityList := p.logic.GetGiftConfigList(ctx, gift.GetConfigListRQY{})
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg":  "ok",
-		"data": entityList,
+		"msg": "success",
 	})
 }
 
+// AddGift 判断某个人是否满足条件,送礼物
 func (p *giftSvr) AddGift(ctx *gin.Context) {
-	// ...
+	if err := p.logic.AddGift(ctx, 1); err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": "fail",
+		})
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg": "success",
+	})
 }

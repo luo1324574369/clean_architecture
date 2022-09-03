@@ -11,8 +11,12 @@ type Gift struct {
 	Desc  string
 }
 
-func (s *ConfigEntity) HasQB() bool {
-	for _, gift := range s.GiftList {
+func (c *ConfigEntity) AllowSendGift() bool {
+	return true
+}
+
+func (c *ConfigEntity) HasQB() bool {
+	for _, gift := range c.GiftList {
 		if gift.Desc == "QB" {
 			return true
 		}

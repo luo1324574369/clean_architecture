@@ -44,28 +44,18 @@ func (a *Adapter) GetGiftConfigList(ctx context.Context,
 	return a.giftConfigPort.List(ctx, q)
 }
 
-func (a *Adapter) AddGift(ctx context.Context, uin uint64, ConfigID uint64) error {
+func (a *Adapter) AddGift(ctx context.Context, uin uint64) error {
 	configs := a.giftConfigPort.List(ctx, giftconfig.GiftConfigQRY{})
 
-	var config *giftEntity.ConfigEntity
 	for _, c := range configs {
-		if c.ID == ConfigID {
-			config = c
-			break
+		if c.AllowSendGift() {
+			insertData := &giftEntity.Entity{}
+			if err := a.giftPort.Create(ctx, insertData); err != nil {
+				return err
+			}
+			return nil
 		}
 	}
 
-	if config == nil {
-		return errors.New("not valid config_id")
-	}
-
-	if config.HasQB() {
-		// ... 检查是否绑定qq
-	}
-
-	insertData := &giftEntity.Entity{}
-	if err := a.giftPort.Create(ctx, insertData); err != nil {
-		return err
-	}
-	return nil
+	return errors.New("not allow gift")
 }
