@@ -1,6 +1,8 @@
 
 ![图片](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
 
+[Blog链接](https://juejin.cn/post/7139141106737872909/)
+
 # 依赖原则
 1. 依赖方向往内
 2. 业务代码独立于框架 独立于基础设施
